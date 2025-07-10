@@ -11,7 +11,7 @@ const PaymentFrom = () => {
     const [error, setError] = useState();
     const axiosSecure = useAxiosSecure();
     const { id: parcelId } = useParams();
-    const { User } = useAuth()
+    const { User } = useAuth();
     const [success, setSuccess] = useState('');
     const [processing, setProcessing] = useState(false);
     // console.log("stripe", stripe);
@@ -73,6 +73,21 @@ const PaymentFrom = () => {
             setSuccess(`Payment successful! ID: `);
             setError('');
             setProcessing(false);
+            const paymentData = {
+                parcelId,
+                email: User?.email,
+                name: User?.displayName,
+                amount: amountcents, // convert cents to USD
+                transaction_id: result.paymentIntent.id,
+                paymentMethod: result.paymentIntent.payment_method_types,
+                paid_ata_string: new Date().toISOString()
+
+            };
+            const paymentres = axiosSecure.post('/create-payment-history', paymentData);
+            console.log(paymentres)
+            // if (paymentres.data.insertedId) {
+            //     console.log("Payment Successfully")
+            // }
         }
 
     }
