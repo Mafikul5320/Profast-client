@@ -2,8 +2,9 @@ import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import useAuth from '../../Hooks/useAuth';
+import Swal from 'sweetalert2';
 
 const PaymentFrom = () => {
     const stripe = useStripe();
@@ -12,6 +13,7 @@ const PaymentFrom = () => {
     const axiosSecure = useAxiosSecure();
     const { id: parcelId } = useParams();
     const { User } = useAuth();
+    const navigate = useNavigate()
     const [success, setSuccess] = useState('');
     const [processing, setProcessing] = useState(false);
     // console.log("stripe", stripe);
@@ -83,11 +85,28 @@ const PaymentFrom = () => {
                 paid_ata_string: new Date().toISOString()
 
             };
-            const paymentres = axiosSecure.post('/create-payment-history', paymentData);
-            console.log(paymentres)
-            // if (paymentres.data.insertedId) {
-            //     console.log("Payment Successfully")
-            // }
+            try {
+                const paymentres = await axiosSecure.post('/create-payment-history', paymentData);
+                console.log(paymentres);
+
+                if (paymentres.data.insertedId) {
+                    Swal.fire({
+                        title: 'Payment Successful!',
+                        html: `
+                    <p><strong>Transaction ID:</strong> ${result.paymentIntent.id}</p>
+                `,
+                        icon: 'success',
+                        confirmButtonText: 'Go My Parsel'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            navigate('/dashboard/myParcel');
+                        }
+                    });
+                    console.log(" Payment Successfully stored in DB.");
+                }
+            } catch (err) {
+                console.error(" Failed to store payment history:", err);
+            }
         }
 
     }

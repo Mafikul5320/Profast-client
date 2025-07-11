@@ -2,6 +2,7 @@ import React, { use } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 import { AuthContext } from '../context/AuthContext';
+import axios from 'axios';
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -10,11 +11,21 @@ const Register = () => {
     const onSubmit = (data) => {
         console.log(data)
         const { email, password } = data;
-        SignIn(email, password).then(user => {
-            console.log(user)
-        }).catch(error => {
-            console.log(error)
-        })
+        // SignIn(email, password).then(user => {
+        //     console.log(user)
+        // }).catch(error => {
+        //     console.log(error)
+        // })
+    }
+    const handneluploadImage = async(e) => {
+        const image = e.target.files[0];
+        const formData = new FormData();
+        formData.append("image",image);
+        const uploadImage = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_upload_key}`,formData);
+        
+
+        console.log(image);
+        console.log(uploadImage.data.data.url);
     }
     return (
         <div className='max-w-xl w-full mx-auto px-4 py-6 sm:px-6 lg:px-8'>
@@ -38,13 +49,7 @@ const Register = () => {
                         className="input h-11 rounded-full w-full"
                         required
                     />
-                    <input
-                        type="text"
-                        {...register('photoURL')}
-                        placeholder="Photo URL"
-                        className="input h-11 rounded-full w-full"
-                        required
-                    />
+                    <input onChange={handneluploadImage} type="file" className="file-input file-input-ghost border border-gray-300 h-11 rounded-full w-full" />
                     <input
                         type="password"
                         {...register('password', {

@@ -1,5 +1,7 @@
 import React from 'react';
-import { Outlet } from 'react-router';
+import { NavLink, Outlet } from 'react-router';
+import logo from '../assets/brands/logo.png'
+import { FaHome, FaBox, FaMoneyCheckAlt, FaSearchLocation, FaUserEdit } from 'react-icons/fa';
 
 const DashboardLayout = () => {
     return (
@@ -31,9 +33,35 @@ const DashboardLayout = () => {
             <div className="drawer-side">
                 <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
                 <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-                    {/* Sidebar content here */}
-                    <li><a>Sidebar Item 1</a></li>
-                    <li><a>Sidebar Item 2</a></li>
+                    <div className='flex mb-10'>
+                        <img className='w-12 h-12' src={logo} />
+                        <h1 className='font-extrabold pt-6 -ml-6'>Profast</h1>
+                    </div>
+                    <li>
+                        <NavLink to="/dashboard" className="flex items-center gap-2">
+                            <FaHome /> Home
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/dashboard/myParcel" className="flex items-center gap-2">
+                            <FaBox /> My Parsel
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/dashboard/payment-history" className="flex items-center gap-2">
+                            <FaMoneyCheckAlt /> Payment History
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/dashboard/track" className="flex items-center gap-2">
+                            <FaSearchLocation /> Track a Package
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/dashboard/update-profile" className="flex items-center gap-2">
+                            <FaUserEdit /> Update Profile
+                        </NavLink>
+                    </li>
                 </ul>
             </div>
         </div>

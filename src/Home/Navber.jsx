@@ -37,7 +37,14 @@ const Navber = () => {
                 </div>
                 <div className='space-x-3'>
                     {
-                        User ? <button className='btn btn-primary' onClick={handelLogout}>Log Out</button> : <>
+                        User ? <>
+                        <div className='flex items-center space-x-3'>
+                            <div>
+                            <img className='h-12 w-12 rounded-full' src={User?.photoUrl} alt="" />
+                        </div>
+                        <button className='btn btn-primary' onClick={handelLogout}>Log Out</button> 
+                        </div>
+                        </>: <>
                             <Link to={'/login'}>
                                 <button className='border border-gray-300 px-3 py-2 rounded-lg'>Sign In</button>
                             </Link>
