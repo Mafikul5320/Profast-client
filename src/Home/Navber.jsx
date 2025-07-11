@@ -28,12 +28,12 @@ const Navber = () => {
                         User && <>
                             <NavLink to={"/Coverage"}>Coverage</NavLink>
                             <NavLink to={"/send parcel"}>Send Parcel</NavLink>
+                            <NavLink to={"/BeARider"}>Be a Rider</NavLink>
                             <NavLink to={"/dashboard/myParcel"}>Dashboard</NavLink>
                         </>
                     }
                     <NavLink>About Us</NavLink>
                     <NavLink>Pricing</NavLink>
-                    <NavLink>Be a Rider</NavLink>
                 </div>
                 <div className='space-x-3'>
                     {
