@@ -1,31 +1,56 @@
-import React, { use } from 'react';
+import React, { use, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
+import useAxios from '../Hooks/useAxios';
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { SignIn } = use(AuthContext);
+    const { SignIn, UpdateProfile } = use(AuthContext);
+    const userAxios = useAxios();
+    const navigate = useNavigate()
+    const [image, setImage] = useState();
 
     const onSubmit = (data) => {
         console.log(data)
-        const { email, password } = data;
-        // SignIn(email, password).then(user => {
-        //     console.log(user)
-        // }).catch(error => {
-        //     console.log(error)
-        // })
+        const { email, password, displayName } = data;
+        SignIn(email, password).then(user => {
+            const updateUser = {
+                displayName,
+                photoURL: image,
+            }
+            UpdateProfile(updateUser).then(async () => {
+                console.log("Profile update Successfull");
+                const userInfo = {
+                    email,
+                    displayName,
+                    photoURL: image,
+                    role: "user",
+                    login_at: new Date().toISOString()
+                }
+                const userData = await userAxios.post('/users', userInfo);
+                console.log(userData.data);
+                if (userData.data.insertedId) {
+                    navigate('/')
+                };
+            }).catch((error) => {
+                console.log(error)
+            })
+            console.log(user)
+        }).catch(error => {
+            console.log(error)
+        })
     }
-    const handneluploadImage = async(e) => {
+    const handneluploadImage = async (e) => {
         const image = e.target.files[0];
         const formData = new FormData();
-        formData.append("image",image);
-        const uploadImage = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_upload_key}`,formData);
-        
+        formData.append("image", image);
+        const uploadImage = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_upload_key}`, formData);
+
 
         console.log(image);
-        console.log(uploadImage.data.data.url);
+        setImage(uploadImage.data.data.url);
     }
     return (
         <div className='max-w-xl w-full mx-auto px-4 py-6 sm:px-6 lg:px-8'>

@@ -40,7 +40,7 @@ const Navber = () => {
                         User ? <>
                         <div className='flex items-center space-x-3'>
                             <div>
-                            <img className='h-12 w-12 rounded-full' src={User?.photoUrl} alt="" />
+                            <img className='h-12 w-12 rounded-full object-center' src={User?.photoURL} alt="" />
                         </div>
                         <button className='btn btn-primary' onClick={handelLogout}>Log Out</button> 
                         </div>

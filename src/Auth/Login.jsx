@@ -3,11 +3,13 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../context/AuthContext';
 import { GoogleAuthProvider } from 'firebase/auth';
+import useAxios from '../Hooks/useAxios';
 
 const Login = () => {
     const { register, handleSubmit } = useForm();
     const provider = new GoogleAuthProvider();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const userAxios = useAxios();
     const { Login, GoogleLogin, SetUser } = use(AuthContext)
     const onSubmit = (data) => {
         // e.preventDefault()
@@ -20,9 +22,20 @@ const Login = () => {
         })
     }
     const handelGoogleLogin = () => {
-        GoogleLogin(provider).then(user => {
-            console.log(user)
-            navigate('/')
+        GoogleLogin(provider).then(async (result) => {
+            const user = result.user;
+            const userInfo = {
+                email: user?.email,
+                displayName: user?.displayName,
+                photoURL: user?.photoURL,
+                role: "user",
+                login_at: new Date().toISOString()
+            }
+            const userData = await userAxios.post('/users', userInfo);
+            console.log(userData.data);
+            if (userData.data.insertedId) {
+                navigate('/')
+            };
         }).catch(error => {
             console.log(error)
         })
