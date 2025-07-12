@@ -14,6 +14,7 @@ import PaymentHistory from "../Dashboard/Payment/PaymentHistory";
 import RiderRegistrationForm from "../Pages/RiderRegistrationForm";
 import ActiveRider from "../Dashboard/Rider/ActiveRider";
 import PendingRider from "../Dashboard/Rider/PendingRider";
+import MakeAdmin from "../Dashboard/Admin/MakeAdmin";
 
 export const Router = createBrowserRouter([
     {
@@ -86,6 +87,10 @@ export const Router = createBrowserRouter([
             {
                 path: "/dashboard/pending-rider",
                 Component: PendingRider
+            },
+            {
+                path: "/dashboard/admin-make",
+                Component: MakeAdmin
             }
         ]
     }

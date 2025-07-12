@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, NavLink, Outlet } from 'react-router';
 import logo from '../assets/brands/logo.png'
 import { FaHome, FaBox, FaMoneyCheckAlt, FaSearchLocation, FaUserEdit, FaMotorcycle, FaClock } from 'react-icons/fa';
+import { UserPen } from 'lucide-react';
 
 const DashboardLayout = () => {
     return (
@@ -71,8 +72,8 @@ const DashboardLayout = () => {
                     </li>
 
                     <li>
-                        <NavLink to="/dashboard/pending-rider" className="flex items-center gap-2 text-yellow-500">
-                            <FaClock />  Pending Rider
+                        <NavLink to="/dashboard/admin-make" className="flex items-center gap-2 ">
+                            <UserPen size={18} />  Admin Make
                         </NavLink>
                     </li>
                 </ul>
