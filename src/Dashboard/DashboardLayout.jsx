@@ -3,8 +3,13 @@ import { Link, NavLink, Outlet } from 'react-router';
 import logo from '../assets/brands/logo.png'
 import { FaHome, FaBox, FaMoneyCheckAlt, FaSearchLocation, FaUserEdit, FaMotorcycle, FaClock } from 'react-icons/fa';
 import { UserPen } from 'lucide-react';
+import useAdminFind from '../Hooks/useAdminFind';
 
 const DashboardLayout = () => {
+    const { user, isLoading } = useAdminFind();
+    console.log(user?.role);
+    console.log(user);
+    console.log(isLoading);
     return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -65,17 +70,21 @@ const DashboardLayout = () => {
                             <FaUserEdit /> Update Profile
                         </NavLink>
                     </li>
-                    <li>
-                        <NavLink to="/dashboard/active-rider" className="flex items-center gap-2 text-green-600">
-                            <FaMotorcycle /> Active Rider
-                        </NavLink>
-                    </li>
+                    {
+                        !isLoading && user?.role === "admin" && <>
+                            <li>
+                                <NavLink to="/dashboard/active-rider" className="flex items-center gap-2 text-green-600">
+                                    <FaMotorcycle /> Active Rider
+                                </NavLink>
+                            </li>
 
-                    <li>
-                        <NavLink to="/dashboard/admin-make" className="flex items-center gap-2 ">
-                            <UserPen size={18} />  Admin Make
-                        </NavLink>
-                    </li>
+                            <li>
+                                <NavLink to="/dashboard/admin-make" className="flex items-center gap-2 ">
+                                    <UserPen size={18} />  Admin Make
+                                </NavLink>
+                            </li>
+                        </>
+                    }
                 </ul>
             </div>
         </div>
