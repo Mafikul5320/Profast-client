@@ -15,6 +15,8 @@ import RiderRegistrationForm from "../Pages/RiderRegistrationForm";
 import ActiveRider from "../Dashboard/Rider/ActiveRider";
 import PendingRider from "../Dashboard/Rider/PendingRider";
 import MakeAdmin from "../Dashboard/Admin/MakeAdmin";
+import ForbiddenPage from "../Pages/ForbiddenPage";
+import AdminRouter from "../context/AdminRouter";
 
 export const Router = createBrowserRouter([
     {
@@ -45,6 +47,10 @@ export const Router = createBrowserRouter([
                 element: <PrivateRouter>
                     <RiderRegistrationForm></RiderRegistrationForm>
                 </PrivateRouter>
+            },
+            {
+                path: "/forbidden",
+                Component: ForbiddenPage
             }
         ]
     },
@@ -82,15 +88,22 @@ export const Router = createBrowserRouter([
             },
             {
                 path: "/dashboard/active-rider",
-                Component: ActiveRider
+                element: <AdminRouter>
+                    <ActiveRider></ActiveRider>
+                </AdminRouter>
             },
             {
                 path: "/dashboard/pending-rider",
-                Component: PendingRider
+                element: <AdminRouter>
+                    <PendingRider></PendingRider>
+                </AdminRouter>
             },
             {
                 path: "/dashboard/admin-make",
-                Component: MakeAdmin
+                // Component: MakeAdmin,
+                element: <AdminRouter>
+                    <MakeAdmin></MakeAdmin>
+                </AdminRouter>
             }
         ]
     }

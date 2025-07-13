@@ -73,6 +73,11 @@ const DashboardLayout = () => {
                     {
                         !isLoading && user?.role === "admin" && <>
                             <li>
+                                <NavLink to="/dashboard/pending-rider" className="flex items-center gap-2 text-yellow-500">
+                                    <FaClock /> Rider Pending 
+                                </NavLink>
+                            </li>
+                            <li>
                                 <NavLink to="/dashboard/active-rider" className="flex items-center gap-2 text-green-600">
                                     <FaMotorcycle /> Active Rider
                                 </NavLink>
