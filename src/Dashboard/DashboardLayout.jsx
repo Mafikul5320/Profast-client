@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, NavLink, Outlet } from 'react-router';
 import logo from '../assets/brands/logo.png'
 import { FaHome, FaBox, FaMoneyCheckAlt, FaSearchLocation, FaUserEdit, FaMotorcycle, FaClock } from 'react-icons/fa';
-import { UserPen } from 'lucide-react';
+import { Bike, UserPen } from 'lucide-react';
 import useAdminFind from '../Hooks/useAdminFind';
 
 const DashboardLayout = () => {
@@ -72,6 +72,11 @@ const DashboardLayout = () => {
                     </li>
                     {
                         !isLoading && user?.role === "admin" && <>
+                            <li>
+                                <NavLink to="/dashboard/rider-assign" className="flex items-center gap-2">
+                                    <Bike size={18} /> Assign Rider 
+                                </NavLink>
+                            </li>
                             <li>
                                 <NavLink to="/dashboard/pending-rider" className="flex items-center gap-2 text-yellow-500">
                                     <FaClock /> Rider Pending 
