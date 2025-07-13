@@ -67,7 +67,8 @@ const AddParcel = () => {
       date: today,
       parcelId,
       create_by: User?.email,
-      status: "unpaid"
+      status: "unpaid",
+      delivary_status: "not_collection"
     };
     console.log(addParsel);
     AxiosSecure.post('/parsels', addParsel).then(res => {

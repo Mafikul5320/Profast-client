@@ -17,6 +17,7 @@ import PendingRider from "../Dashboard/Rider/PendingRider";
 import MakeAdmin from "../Dashboard/Admin/MakeAdmin";
 import ForbiddenPage from "../Pages/ForbiddenPage";
 import AdminRouter from "../context/AdminRouter";
+import RiderAssign from "../Dashboard/Rider/RiderAssign";
 
 export const Router = createBrowserRouter([
     {
@@ -104,6 +105,10 @@ export const Router = createBrowserRouter([
                 element: <AdminRouter>
                     <MakeAdmin></MakeAdmin>
                 </AdminRouter>
+            },
+            {
+                path: "/dashboard/rider-assign",
+                element: <RiderAssign></RiderAssign>
             }
         ]
     }
